@@ -2,6 +2,8 @@
 import { SiEthereum } from 'react-icons/si';
 import { BsInfoCircle } from 'react-icons/bs';
 import Loader from './Loader';
+import { useContext } from 'react';
+import { TransactionContext } from '../context/TransactionContacts';
 
 const isLoading = false;
 
@@ -17,16 +19,28 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
     />
 );
 
-const handleChange = (e, name) => {
-    return e, name;
-};
-
-const handleSubmit = () => {};
+// const handleChange = (e, name) => {
+//     return e, name;
+// };
 
 const Welcome = () => {
+    const {
+        connectWallet,
+        currentAccount,
+        formData,
+        handleChange,
+        sendTransaction,
+    } = useContext(TransactionContext);
+
+    const handleSubmit = (e) => {
+        const { addressTo, amount, keyword, message } = formData;
+        e.preventDefault();
+        if (!addressTo || !amount || !keyword || !message) return;
+
+        sendTransaction();
+    };
     const commonStyles =
         'min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white';
-    const connectWallet = () => {};
     return (
         <div className="flex w-full justify-center items-center">
             <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4 ">
@@ -37,15 +51,17 @@ const Welcome = () => {
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
                         explore the crypto world
                     </p>
-                    <button
-                        type="button"
-                        onClick={connectWallet}
-                        className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546Ed]"
-                    >
-                        <p className=" text-white text-base font-bold">
-                            Connect wallet
-                        </p>
-                    </button>
+                    {!currentAccount && (
+                        <button
+                            type="button"
+                            onClick={connectWallet}
+                            className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546Ed]"
+                        >
+                            <p className=" text-white text-base font-bold">
+                                Connect wallet
+                            </p>
+                        </button>
+                    )}
 
                     <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
                         <div className={`rounded-tl-2xl ${commonStyles}`}>
@@ -88,7 +104,7 @@ const Welcome = () => {
                     <div className="p-5 sm:w-96 w-full flex flex-col justy-start items-center blue-glassmorphism">
                         <Input
                             placeholder="Address to"
-                            name={''}
+                            name={'addressTo'}
                             type={'text'}
                             handleChange={handleChange}
                         />
@@ -96,19 +112,19 @@ const Welcome = () => {
                             placeholder="Amount (ETH)"
                             name={'amount'}
                             type={'number'}
-                            handleChange={() => {}}
+                            handleChange={handleChange}
                         />
                         <Input
                             placeholder="keyword (GIF)"
                             name={'keyword'}
                             type={'text'}
-                            handleChange={() => {}}
+                            handleChange={handleChange}
                         />
                         <Input
                             placeholder="enter message"
                             name={'message'}
                             type={'text'}
-                            handleChange={() => {}}
+                            handleChange={handleChange}
                         />
 
                         <div className="h-[1px] w-full bg-gray-400  " />
