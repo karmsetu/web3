@@ -8,7 +8,7 @@ export const TransactionContext = createContext();
 const { ethereum } = window;
 
 const getEtheriumContract = () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
+    const provider = new ethers.BrowserProvider(ethereum);
     const signer = provider.getSigner();
     const transactionContract = new ethers.Contract(
         contractAddress,
@@ -78,7 +78,13 @@ export const TransactionProvider = ({ children }) => {
         try {
             if (!ethereum) return alert('Please install metamask');
             const { addressTo, amount, keyword, message } = formData;
-            const parsedAmount = ethers.utils.parseEther(amount);
+            const parsedAmount = ethers.parseEther(amount);
+            console.log(
+                {
+                    amount,
+                },
+                parsedAmount.toString(16)
+            );
             const transactionContract = getEtheriumContract();
 
             await ethereum.request({
@@ -88,7 +94,7 @@ export const TransactionProvider = ({ children }) => {
                         from: currentAccount,
                         to: addressTo,
                         gas: '0x5208', //
-                        value: parsedAmount._hex,
+                        value: parsedAmount.toString(16),
                     },
                 ],
             });
