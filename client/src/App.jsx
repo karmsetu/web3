@@ -8,7 +8,7 @@ import Welcome from './components/Welcome';
 const App = () => {
     return (
         <>
-            <div className="min-h-screen">
+            <div className="h-full">
                 <div className="gradient-bg-welcome">
                     <NavBar />
                     <Welcome />

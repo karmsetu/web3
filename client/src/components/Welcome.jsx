@@ -4,6 +4,7 @@ import { BsInfoCircle } from 'react-icons/bs';
 import Loader from './Loader';
 import { useContext } from 'react';
 import { TransactionContext } from '../context/TransactionContacts';
+import { shortenAddress } from '../utils/shortenAddress';
 
 const isLoading = false;
 
@@ -92,7 +93,7 @@ const Welcome = () => {
                             </div>
                             <div>
                                 <p className="text-white font-light text-sm">
-                                    address
+                                    {shortenAddress(currentAccount)}
                                 </p>
                                 <p className="text-white font-semibold text-lg">
                                     Etherium
