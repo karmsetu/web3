@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { TransactionContext } from '../context/TransactionContacts';
 import { shortenAddress } from '../utils/shortenAddress';
 
-const isLoading = false;
+// const isLoading = false;
 
 const Input = ({ placeholder, name, type, value, handleChange }) => (
     <input
@@ -31,6 +31,7 @@ const Welcome = () => {
         formData,
         handleChange,
         sendTransaction,
+        isLoading,
     } = useContext(TransactionContext);
 
     const handleSubmit = (e) => {
